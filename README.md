@@ -16,7 +16,7 @@ New projects added regularly — feedback welcome!
   - Actual vs Forecast graphing  
   - AI explains data quality + trends in plain English (OpenAI / Gemini / Grok)
 
-* **Daily AI News Brief**  
+* **News Summarizer**  
   - Scrapes live headlines (Google News, BBC, etc.)  
   - One-line switch between OpenAI, Gemini, and Grok backends  
   - Ready for daily email automation
@@ -25,6 +25,11 @@ New projects added regularly — feedback welcome!
   - Personalized daily news brief from RSS sources (TechCrunch, BBC, Reuters)  
   - AI tailors insights to your role (Investor, CEO, Analyst) and focus (AI, Finance, etc.)  
   - Multi-LLM backend with depth control — try it now: [Live Demo](https://daily-ai-brief.streamlit.app/)
+ 
+* **[Microsoft Copilot for Analysts](copilot-for-analysts/)**
+  - Real-world M365 Copilot use: raw CSV → AI-generated analysis + full PowerPoint deck in seconds
+  - Excel + PowerPoint automation — zero code, 100% native Copilot (2025)
+  - [Live Example](copilot-for-analysts/sales_trends.pptx) | [Screenshot](copilot-for-analysts/PowerPointExample.png)
 
 All code is clean, commented, and ready to run.
 
