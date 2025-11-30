@@ -29,7 +29,7 @@ New projects added regularly — feedback welcome!
 * **[Microsoft Copilot for Analysts](https://github.com/garytaylor2u-hub/KC-analytics/tree/main/Microsoft%20Copilot%20for%20Analysts/)**
   - Real-world M365 Copilot use: raw CSV → AI-generated analysis + full PowerPoint deck in seconds
   - Excel + PowerPoint automation — zero code, 100% native Copilot (2025)
-  - [Live Example](copilot-for-analysts/sales_trends.pptx) | [Screenshot](copilot-for-analysts/PowerPointExample.png)
+  - [Live Example](https://github.com/garytaylor2u-hub/KC-analytics/blob/main/Microsoft%20Copilot%20for%20Analysts/sales_trends.pptx) | [Screenshot](https://github.com/garytaylor2u-hub/KC-analytics/blob/main/Microsoft%20Copilot%20for%20Analysts/PowerPointExample.png)
 
 All code is clean, commented, and ready to run.
 
