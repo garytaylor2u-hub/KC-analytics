@@ -1,0 +1,34 @@
+Fetching live headlines from https://techcrunch.com/...
+
+Today's top headlines:
+ 1. More from TechCrunch
+ 2. Black Friday sets online spending record of $11.8B, Adobe says
+ 3. Media & Entertainment
+ 4. VC Kara Nortman bet early on women’s sports, and now she’s creating the market
+ 5. No, you can’t get your AI to ‘admit’ to being sexist, but it probably is anyway
+ 6. Dominic-Madori Davis
+ 7. Airbus orders software fix to thousands of planes due to solar radiation risk
+ 8. The race to regulate AI has sparked a federal vs state showdown
+ 9. How OpenAI and Google see AI changing go-to-market strategies
+10. Supabase CEO on the “painful” decisions that built a $5B company
+11. Theresa Loconsolo
+12. Anduril’s autonomous weapons stumble in tests and combat, WSJ reports
+13. New York state law takes aim at personalized pricing
+14. Supabase hit $5B by turning down million-dollar contracts. Here’s why.
+15. SoftBank stays in as Meesho $606M IPO becomes India’s first major e-commerce listing
+16. The future will be explained to you in Palo Alto
+17. Why ‘hold forever’ investors are snapping up venture capital ‘zombies’
+18. Altman describes OpenAI’s forthcoming AI device as more peaceful and calm than the iPhone
+19. OpenAI learned the hard way that Cameo trademarked the word ‘cameo’
+20. Amanda Silberling
+
+Asking GEMINI for today's summary...
+
+GEMINI says:
+Here are today's biggest global events:
+
+*   Black Friday achieved a new online spending record of $11.8 billion.
+*   Airbus mandated a software fix for thousands of aircraft to mitigate solar radiation risks.
+*   India saw its first major e-commerce listing with Meesho's $606 million IPO, retaining SoftBank's investment.
+*   The global effort to regulate AI is intensifying, highlighted by a federal vs. state debate in the US.
+*   OpenAI revealed plans for a new AI device, envisioned by Sam Altman as a more "peaceful and calm" alternative to smartphones.
