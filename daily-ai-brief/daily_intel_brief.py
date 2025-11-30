@@ -1,4 +1,4 @@
-# daily_intel_brief.py — Final Edition with Fixes
+# daily_intel_brief.py — Final Mobile-Perfect Edition
 import streamlit as st
 import feedparser
 from datetime import datetime
@@ -6,36 +6,70 @@ import os
 
 st.set_page_config(page_title="AI Daily Brief", page_icon="🧠", layout="centered")
 
-# Backend
-BACKEND = st.sidebar.selectbox("AI Engine", ["grok", "openai", "gemini"], index=0)
+# ================== BACKEND SWITCHER ==================
+BACKEND = st.sidebar.selectbox(
+    "AI Engine",
+    ["openai", "gemini"],  # add Grok back in later when model is stable
+    index=0,
+    help="OpenAI = balanced • Gemini = thorough • Grok = witty & direct (will be added at a later time)"
+)
+# ======================================================
 
-# Keys
+# Load API keys
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-XAI_API_KEY = os.getenv("XAI_API_KEY")
+XAI_API_KEY    = os.getenv("XAI_API_KEY")
 
 st.title("🧠 Your Personal AI Intelligence Brief")
 st.caption(f"Today • {datetime.now():%A, %B %d, %Y}")
 
-# Persona
-st.sidebar.header("Who You Are")
-role = st.sidebar.selectbox("Your role", ["CEO / Founder", "Investor", "Data Leader", "Product Manager", "Analyst", "Journalist", "Engineer", "Curious Human"], index=1)
-focus = st.sidebar.multiselect("What you care about", ["AI & Tech", "Markets & Finance", "Politics", "Geopolitics", "Climate & Energy", "Startups", "Health", "Culture"], default=["AI & Tech", "Markets & Finance"])
-depth = st.sidebar.slider("Depth level", 1, 5, 3, help="1 = quick scan • 5 = deep implications")
+# ——— MOBILE HINT (always visible) ———
+st.markdown("""
+**👈 On mobile?** Swipe from the left edge or tap the ≡ menu to open settings
+""")
 
-# Sources (expanded with free/no-paywall)
-sources = {
-    "TechCrunch": "https://techcrunch.com/feed/",
-    "BBC News": "http://feeds.bbci.co.uk/news/rss.xml",
-    "The Guardian": "https://www.theguardian.com/world/rss",
-    "Google News (Top)": "https://news.google.com/rss?hl=en-US&gl=US&ceid=US:en",
-    "NPR (U.S.)": "https://feeds.npr.org/1001/rss.xml"
-}
-source_name = st.sidebar.selectbox("Source", list(sources.keys()))
-feed_url = sources[source_name]
+# ——— USER PERSONA (now in always-visible sidebar) ———
+with st.sidebar:
+    st.header("⚙️ Configure Your Brief")
 
-if st.sidebar.button("Generate My Brief", type="primary", use_container_width=True):
-    with st.spinner(f"Fetching real news from {source_name} and briefing {BACKEND.upper()}..."):
+    role = st.selectbox("Your role", [
+        "CEO / Founder", "Investor", "Data Leader", "Product Manager",
+        "Analyst", "Journalist", "Engineer", "Curious Human"
+    ], index=1)
+
+    focus = st.multiselect(
+        "What you care about",
+        ["AI & Tech", "Markets & Finance", "Politics", "Geopolitics",
+         "Climate & Energy", "Startups", "Health", "Culture"],
+        default=["AI & Tech", "Markets & Finance"]
+    )
+
+    depth = st.slider("Depth level", 1, 5, 3,
+        help="1 = quick scan • 5 = deep implications")
+
+    # Sources
+    sources = {
+        "TechCrunch": "https://techcrunch.com/feed/",
+        "BBC News": "http://feeds.bbci.co.uk/news/rss.xml",
+        "The Guardian": "https://www.theguardian.com/world/rss",
+        "Google News": "https://news.google.com/rss?hl=en-US&gl=US&ceid=US:en",
+        "NPR": "https://feeds.npr.org/1001/rss.xml"
+    }
+    source_name = st.selectbox("Source", list(sources.keys()))
+    feed_url = sources[source_name]
+
+    st.markdown("---")
+    st.caption("Built with ❤️ using Streamlit + RSS + OpenAI/Gemini/Grok")
+
+    if st.button("🚀 Generate My Brief", type="primary", use_container_width=True):
+        st.session_state.generate = True
+    else:
+        st.session_state.generate = False
+
+# ——— MAIN GENERATION LOGIC ———
+if st.session_state.generate:
+    with st.spinner(f"Fetching {source_name} headlines and briefing {BACKEND.upper()}..."):
+        # RSS fetch
         feed = feedparser.parse(feed_url)
         entries = feed.entries[:25]
         headlines = [e.title for e in entries if hasattr(e, 'title')]
@@ -50,7 +84,7 @@ if st.sidebar.button("Generate My Brief", type="primary", use_container_width=Tr
             Here are today's top real headlines from {source_name}:
             {chr(10).join(f'• {h}' for h in headlines)}
 
-            Write a crisp, high-signal brief with exactly this format (use Markdown bold for story numbers/titles, but no extra asterisks — keep it clean):
+            Write a crisp, high-signal brief with exactly this format (use Markdown bold for story numbers/titles):
 
             **1. [Headline]**
 
@@ -89,33 +123,12 @@ if st.sidebar.button("Generate My Brief", type="primary", use_container_width=Tr
         brief = get_brief()
 
         st.success("Brief Ready")
-        st.markdown(
-    brief
-    .replace("**", "<b>", 1)                    # first ** → <b>
-    .replace("**", "</b>", 1)                   # second ** → </b>
-    .replace("**", "<b>")                       # all remaining ** → <b>
-    .replace("**", "</b>"), 
-    unsafe_allow_html=True
-)
+        st.markdown(f"<div style='line-height: 2.0;'>{brief}</div>", unsafe_allow_html=True)
 
         st.divider()
-        with st.expander("Raw Headlines (click to expand)", expanded=False):
-            for i, e in enumerate(entries, 1):
-                h = e.title if hasattr(e, 'title') else "Untitled"
-                link = e.link if hasattr(e, 'link') else "#"
-                
-                preview = ""
-                if hasattr(e, 'content') and e.content:
-                    preview = e.content[0].value[:140] + "..." if len(e.content[0].value) > 140 else e.content[0].value
-                elif hasattr(e, 'summary') and e.summary:
-                    preview = e.summary[:140] + "..."
-                elif hasattr(e, 'description') and e.description:
-                    preview = e.description[:140] + "..."
-                else:
-                    preview = "Read full article for details..."
-                
-                st.markdown(f"**{i}.** [{h}]({link})<br><small>{preview}</small>", unsafe_allow_html=True)
+        with st.expander("Raw Headlines", expanded=False):
+            for i, (h, l) in enumerate(zip(headlines, links), 1):
+                st.markdown(f"**{i}.** [{h}]({l})")
 
 else:
-    st.info("Configure your role & focus → click **Generate My Brief**")
-    st.caption("Built with ❤️ using Streamlit + RSS + OpenAI/Gemini/Grok • November 2025")
+    st.info("👈 Configure in the sidebar → click **Generate My Brief**")
